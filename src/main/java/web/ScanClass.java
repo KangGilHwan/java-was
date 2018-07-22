@@ -1,18 +1,19 @@
 package web;
 
+import annotation.Controller;
+import annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ScanClass {
 
     private static final Logger log = LoggerFactory.getLogger(ScanClass.class);
     private static String ROOT;
-    private static List<Class<?>> classList;
+    private static Map<String, Object> controller = new HashMap<>();
 
     static {
         URL packageDirURL = Thread.currentThread().getContextClassLoader().getResource("./");
@@ -27,9 +28,11 @@ public class ScanClass {
             classes = scan(files, ROOT, classes);
         }
 
-        classList = classes;
-        for (Class<?> scanedClass : classes){
+        for (Class<?> scanedClass : classes) {
             log.debug("Scaned Class : {}", scanedClass.getName());
+            if (scanedClass.isAnnotationPresent(Controller.class)) {
+                addController(scanedClass);
+            }
         }
     }
 
@@ -41,7 +44,7 @@ public class ScanClass {
                 File fileChild = new File(anotherPath);
                 scan(fileChild.listFiles(), anotherPath, classes);
             } else {
-                findClassFile(file.getName(), directoryName, classes);
+                addClassFileToList(file.getName(), directoryName, classes);
             }
         }
         return classes;
@@ -55,10 +58,10 @@ public class ScanClass {
             scan(fileChild.listFiles(), childPath, classes);
             return;
         }
-        findClassFile(file.getName(), directoryName, classes);
+        addClassFileToList(file.getName(), directoryName, classes);
     }
 
-    private static void findClassFile(String fileName, String directoryName, List<Class<?>> classes) {
+    private static void addClassFileToList(String fileName, String directoryName, List<Class<?>> classes) {
         if (fileName.endsWith(".class")) {
             fileName = fileName.substring(0, fileName.length() - 6);
             try {
@@ -72,7 +75,26 @@ public class ScanClass {
         }
     }
 
-    public static List<Class<?>> getClasses(){
-        return classList;
+    private static void addController(Class<?> clazz) {
+        try {
+            if (clazz.isAnnotationPresent(RequestMapping.class)) {
+                RequestMapping requestMapping = clazz.getAnnotation(RequestMapping.class);
+                log.debug("RequestMapping value : {}", requestMapping.value());
+                controller.put(requestMapping.value(), clazz.newInstance());
+            }
+        } catch (Exception e) {
+            log.debug(e.getMessage());
+        }
+    }
+
+    public static Object getController(String requestUrl){
+        Set<String> keys = controller.keySet();
+        for (String key : keys){
+            if (requestUrl.startsWith(key) && !requestUrl.contains(".")){
+                return controller.get(requestUrl);
+            }
+        }
+        log.debug("Null!!");
+        return null;
     }
 }

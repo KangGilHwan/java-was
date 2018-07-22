@@ -1,5 +1,7 @@
 package web;
 
+import annotation.Controller;
+import annotation.RequestMapping;
 import db.DataBase;
 import model.User;
 import org.slf4j.Logger;
@@ -9,11 +11,14 @@ import webserver.HttpResponse;
 
 import java.io.IOException;
 
-public class LoginController extends AbstractController{
+@Controller
+@RequestMapping("/user/login")
+public class LoginController{
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    public void doPost(HttpRequest request, HttpResponse response){
+    @RequestMapping("")
+    public void login(HttpRequest request, HttpResponse response){
         User user = DataBase.findUserById(request.getParams("userId"));
         if (user == null || !user.matchPassword(request.getParams("password"))) {
             response.addHeader("Set-Cookie", "logined=false; Path=/");

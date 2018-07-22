@@ -63,4 +63,8 @@ public class HttpRequest {
     public boolean isGetMethod(){
         return method.isGetMethod();
     }
+
+    public boolean urlCollect(String mappingUrl){
+        return url.getUrl().equals(mappingUrl);
+    }
 }

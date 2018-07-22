@@ -1,16 +1,15 @@
 package webserver;
 
+import annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import web.Controller;
-import web.DispatcherServlet;
 import web.ForwardController;
 import web.ScanClass;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.net.Socket;
-import java.util.List;
 
 public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
@@ -28,14 +27,26 @@ public class RequestHandler extends Thread {
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             HttpRequest request = HttpFactory.init(in);
             HttpResponse response = new HttpResponse(out);
-            DispatcherServlet dispatcherServlet = new DispatcherServlet();
-            List<Class<?>> classes = ScanClass.getClasses();
-//            for (Class<?> name : classes){
-//                log.debug("Class List : {}", name.getName());
-//            }
+//            DispatcherServlet dispatcherServlet = new DispatcherServlet();
 
-            Controller controller = dispatcherServlet.match(request.getUrl());
-            controller.service(request, response);
+            Object controller = ScanClass.getController(request.getUrl());
+            if (controller == null) {
+                ForwardController.forward(request, response);
+                return;
+            }
+            log.debug("Controller : {}", controller.getClass().getName());
+            String path = controller.getClass().getAnnotation(RequestMapping.class).value();
+            Method[] methods = controller.getClass().getMethods();
+            log.debug("RequestMapping path : {}", path);
+
+            for (Method method : methods){
+                if (method.isAnnotationPresent(RequestMapping.class)){
+                    if (request.urlCollect(path + method.getAnnotation(RequestMapping.class).value())){
+                        method.invoke(controller, request, response);
+                    return;
+                    }
+                }
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         }
