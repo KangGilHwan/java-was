@@ -15,7 +15,6 @@ import java.util.Set;
 public class HttpResponse {
 
     private static final Logger log = LoggerFactory.getLogger(HttpResponse.class);
-    public static final String DOMAIN = "http://localhost:8070";
     private static final String COLON = ": ";
     private Map<String, String> headers;
     private DataOutputStream response;
@@ -63,21 +62,13 @@ public class HttpResponse {
         }
     }
 
-    public void response200Header() {
+    private void response200Header() {
         try {
             response.writeBytes("HTTP/1.1 " + StatusCode.OK + "\r\n");
             insertHeader();
         } catch (IOException e) {
             e.getMessage();
         }
-    }
-
-    private void insertHeader() throws IOException {
-        Set<String> keys = headers.keySet();
-        for (String key : keys) {
-            response.writeBytes(key + COLON + headers.get(key) + "\r\n");
-        }
-        response.writeBytes("\r\n");
     }
 
     private void responseBody(byte[] body) {
@@ -87,5 +78,13 @@ public class HttpResponse {
         } catch (IOException e) {
             log.error(e.getMessage());
         }
+    }
+
+    private void insertHeader() throws IOException {
+        Set<String> keys = headers.keySet();
+        for (String key : keys) {
+            response.writeBytes(key + COLON + headers.get(key) + "\r\n");
+        }
+        response.writeBytes("\r\n");
     }
 }

@@ -25,26 +25,26 @@ public class HttpFactory {
         return new HttpRequest(url, method, httpHeader, request);
     }
 
-    public String getMethod(String url) {
-        List<String> urlAndQueryString = Arrays.asList(url.split("\\?"));
-        String getUrl = urlAndQueryString.get(0).trim();
-        log.debug("Get Url : {}", getUrl);
-        if (urlAndQueryString.size() != 2) {
-            return getUrl;
-        }
-
-        String queryString = urlAndQueryString.get(1).trim();
-        log.debug("QueryString : {}", queryString);
-        return getUrl;
-    }
-
-
-    private static HttpParameter parseBody(BufferedReader request, String length) throws IOException {
-        int size = Integer.parseInt(length);
-        String line = IOUtils.readData(request, size);
-        log.debug("Body : {}", line);
-        return new HttpParameter(line);
-    }
+//    public String getMethod(String url) {
+//        List<String> urlAndQueryString = Arrays.asList(url.split("\\?"));
+//        String getUrl = urlAndQueryString.get(0).trim();
+//        log.debug("Get Url : {}", getUrl);
+//        if (urlAndQueryString.size() != 2) {
+//            return getUrl;
+//        }
+//
+//        String queryString = urlAndQueryString.get(1).trim();
+//        log.debug("QueryString : {}", queryString);
+//        return getUrl;
+//    }
+//
+//
+//    private static HttpParameter parseBody(BufferedReader request, String length) throws IOException {
+//        int size = Integer.parseInt(length);
+//        String line = IOUtils.readData(request, size);
+//        log.debug("Body : {}", line);
+//        return new HttpParameter(line);
+//    }
 
     public static Map<String, String> createHeader(BufferedReader request) throws IOException {
         String line = request.readLine();

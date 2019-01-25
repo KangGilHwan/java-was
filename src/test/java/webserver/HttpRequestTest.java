@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,7 +21,7 @@ public class HttpRequestTest {
         assertEquals("GET", request.getMethod());
         assertEquals("/user/create", request.getUrl());
         assertEquals("keep-alive", request.getHeader("Connection"));
-        assertEquals("javajigi", request.getParams("userId"));
+        assertEquals("javajigi", request.getParameter("userId"));
     }
 
     @Test
@@ -34,6 +32,6 @@ public class HttpRequestTest {
         assertEquals("POST", request.getMethod());
         assertEquals("/user/create", request.getUrl());
         assertEquals("keep-alive", request.getHeader("Connection"));
-        assertEquals("javajigi", request.getParams("userId"));
+        assertEquals("javajigi", request.getParameter("userId"));
     }
 }

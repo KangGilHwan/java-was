@@ -1,5 +1,6 @@
 package web;
 
+import annotation.Autowired;
 import annotation.Controller;
 import annotation.RequestMapping;
 import db.DataBase;
@@ -15,18 +16,19 @@ public class ListUserController{
 
     private static final Logger log = LoggerFactory.getLogger(ListUserController.class);
 
+    @Autowired
+    private DataBase dataBase;
+
     @RequestMapping("")
     public void showUsers(HttpRequest request, HttpResponse response){
         String cookie = request.getHeader("Cookie");
-        log.debug("Cookies : {}", cookie);
         if (!cookie.contains("logined=true")) {
             response.sendRedirect("/login.html");
             return;
         }
         ModelAndView modelAndView = new ModelAndView("/user/list.html");
-        modelAndView.setAttribute("user", DataBase.findAll());
+        log.debug("Users : {}", dataBase.findAll());
+        modelAndView.setAttribute("user", dataBase.findAll());
         response.modelAndViewResponse(modelAndView);
     }
-
-    public void doPost(HttpRequest request, HttpResponse response){}
 }

@@ -15,9 +15,11 @@ import static org.junit.Assert.assertTrue;
 public class ModelAndViewTest {
 
     private ModelAndView modelAndView;
+    private DataBase dataBase;
 
     @Before
     public void setUp() throws Exception {
+        dataBase = new DataBase();
         modelAndView = new ModelAndView("/user/list.html");
         modelAndView.setAttribute("user", new User("riverway", "password", "kang", "rlfghks@naver.com"));
         modelAndView.setAttribute("user2", new User("pobi", "password", "javajigi", "test@naver.com"));
@@ -79,10 +81,10 @@ public class ModelAndViewTest {
     public void collectionTest() throws Exception{
         modelAndView = new ModelAndView("/user/list.html");
 
-        DataBase.addUser(new User("riverway", "password", "kang", "rlfghks@naver.com"));
-        DataBase.addUser(new User("pobi", "password", "javajigi", "test@naver.com"));
-        DataBase.addUser(new User("code", "password", "code", "code@naver.com"));
-        modelAndView.setAttribute("user", DataBase.findAll());
+        dataBase.addUser(new User("riverway", "password", "kang", "rlfghks@naver.com"));
+        dataBase.addUser(new User("pobi", "password", "javajigi", "test@naver.com"));
+        dataBase.addUser(new User("code", "password", "code", "code@naver.com"));
+        modelAndView.setAttribute("user", dataBase.findAll());
 
         String result = modelAndView.transfer();
         System.out.println(result);

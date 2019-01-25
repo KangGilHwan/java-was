@@ -2,14 +2,12 @@ package webserver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.HttpRequestUtils;
 import util.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class HttpRequest {
 
@@ -42,22 +40,22 @@ public class HttpRequest {
         return httpHeader.findHeader(key);
     }
 
-    public String getParams(String key){
+    public String getParameter(String key){
         return parameters.findParameter(key);
     }
 
-    public String existParameter(List<String> url, BufferedReader br) throws IOException {
+    public String existParameter(List<String> urlAndQueryString, BufferedReader br) throws IOException {
         if (!method.isGetMethod()) {
             return IOUtils.readData(br, httpHeader.getContentLength());
         }
-        return hasUrl(url);
+        return parseQueryString(urlAndQueryString);
     }
 
-    public String hasUrl(List<String> url) {
-        if (url.size() != 2) {
+    public String parseQueryString(List<String> urlAndQueryString) {
+        if (urlAndQueryString.size() != 2) {
             return null;
         }
-        return url.get(1).trim();
+        return urlAndQueryString.get(1).trim();
     }
 
     public boolean isGetMethod(){

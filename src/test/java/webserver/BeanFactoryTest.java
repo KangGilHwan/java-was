@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScanClassTest {
+public class BeanFactoryTest {
 
     private String directoryString;
 
@@ -25,7 +25,7 @@ public class ScanClassTest {
             File[] files = directory.listFiles();
             classes = findFile(files, directoryString, classes);
         }
-        for (Class<?> name : classes){
+        for (Class<?> name : classes) {
             System.out.println(name.getName());
         }
     }

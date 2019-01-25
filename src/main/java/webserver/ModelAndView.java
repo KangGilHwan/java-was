@@ -26,8 +26,8 @@ public class ModelAndView {
         return model.get(key);
     }
 
-    public byte[] createView() throws Exception{
-        if (isEmpty()){
+    public byte[] createView() throws Exception {
+        if (isEmpty()) {
             return Files.readAllBytes(new File("./webapp" + view).toPath());
         }
         return transfer().getBytes();
@@ -101,11 +101,11 @@ public class ModelAndView {
         return orginal;
     }
 
-    public String saveBefore(String origin, String keyStart) {
+    private String saveBefore(String origin, String keyStart) {
         return origin.substring(0, origin.indexOf(keyStart));
     }
 
-    public String saveAfter(String origin, String keyStart, String keyFinsh) {
+    private String saveAfter(String origin, String keyStart, String keyFinsh) {
         return origin.substring(origin.indexOf(keyFinsh) + keyFinsh.length());
     }
 
@@ -126,7 +126,7 @@ public class ModelAndView {
         return String.format("{{/%s}}", key);
     }
 
-    public boolean isCollection(Object object) {
+    private boolean isCollection(Object object) {
         return object instanceof Collection<?>;
     }
 }
