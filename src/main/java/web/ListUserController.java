@@ -12,7 +12,7 @@ import webserver.ModelAndView;
 
 @Controller
 @RequestMapping("/user/list")
-public class ListUserController{
+public class ListUserController {
 
     private static final Logger log = LoggerFactory.getLogger(ListUserController.class);
 
@@ -20,7 +20,7 @@ public class ListUserController{
     private DataBase dataBase;
 
     @RequestMapping("")
-    public void showUsers(HttpRequest request, HttpResponse response){
+    public void showUsers(HttpRequest request, HttpResponse response) {
         String cookie = request.getHeader("Cookie");
         if (!cookie.contains("logined=true")) {
             response.sendRedirect("/login.html");

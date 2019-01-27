@@ -34,10 +34,10 @@ public class ModelAndView {
     }
 
     public String transfer() throws Exception {
-        byte[] body = Files.readAllBytes(new File("./webapp" + view).toPath());
-        String beforeBody = new String(body);
+        byte[] htmlFile = Files.readAllBytes(new File("./webapp" + view).toPath());
+        String html = new String(htmlFile);
         List<String> keys = getKey();
-        return replaceHtml(beforeBody, keys);
+        return replaceHtml(html, keys);
     }
 
     public List<String> getKey() {

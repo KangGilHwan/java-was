@@ -2,9 +2,6 @@ package util;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
-import model.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -59,7 +56,7 @@ public class HttpRequestUtils {
 
     public static String parseUrl(String request, String type) throws IOException {
         List<String> forms = Arrays.asList(request.split(" "));
-        if (type.equals("method")){
+        if (type.equals("method")) {
             return forms.get(0).trim();
         }
         return forms.get(1).trim();

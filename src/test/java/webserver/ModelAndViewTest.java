@@ -8,9 +8,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ModelAndViewTest {
 
@@ -26,34 +24,34 @@ public class ModelAndViewTest {
     }
 
     @Test
-    public void getKeyTest(){
+    public void getKeyTest() {
         List<String> keys = modelAndView.getKey();
         assertTrue(keys.contains("user"));
         assertTrue(keys.contains("user2"));
     }
 
     @Test
-    public void getValueTest(){
+    public void getValueTest() {
         List<String> keys = modelAndView.getKey();
-        for (String key : keys){
+        for (String key : keys) {
             User user = (User) modelAndView.getAttribute(key);
             assertTrue(user.getUserId().equals("pobi") || user.getUserId().equals("riverway"));
         }
     }
 
     @Test
-    public void isEmptyTest(){
+    public void isEmptyTest() {
         assertFalse(modelAndView.isEmpty());
     }
 
     @Test
-    public void keyTransfer(){
+    public void keyTransfer() {
         assertThat(modelAndView.keyStart("user"), is("{{#user}}"));
         assertThat(modelAndView.keyFinsh("user"), is("{{/user}}"));
     }
 
     @Test
-    public void invokeTest() throws Exception{
+    public void invokeTest() throws Exception {
         String test = "{{userId}}test{{name}}";
         String userId = test.substring(test.indexOf("{{") + 2, test.indexOf("}}"));
         assertThat(userId, is("userId"));
@@ -62,14 +60,14 @@ public class ModelAndViewTest {
     }
 
     @Test
-    public void changeValueTest() throws Exception{
+    public void changeValueTest() throws Exception {
         String test = "{{userId}} test {{name}}";
         String result = modelAndView.changeValue(test, modelAndView.getAttribute("user"));
         assertThat(result, is("riverway test kang"));
     }
 
     @Test
-    public void noCollectionTest() throws Exception{
+    public void noCollectionTest() throws Exception {
         String result = modelAndView.transfer();
         System.out.println(result);
         assertTrue(result.contains("riverway"));
@@ -78,7 +76,7 @@ public class ModelAndViewTest {
     }
 
     @Test
-    public void collectionTest() throws Exception{
+    public void collectionTest() throws Exception {
         modelAndView = new ModelAndView("/user/list.html");
 
         dataBase.addUser(new User("riverway", "password", "kang", "rlfghks@naver.com"));

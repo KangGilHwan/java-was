@@ -13,7 +13,7 @@ public class User {
         this.email = email;
     }
 
-    public boolean matchPassword(String password){
+    public boolean matchPassword(String password) {
         return this.password.equals(password);
     }
 

@@ -35,7 +35,7 @@ public class HttpResponse {
             headers.put("Content-Length", body.length + "");
             response200Header();
             responseBody(body);
-        }catch (IOException e){
+        } catch (IOException e) {
             log.debug(e.getMessage());
         }
     }
@@ -47,7 +47,7 @@ public class HttpResponse {
             headers.put("Content-Length", body.length + "");
             response200Header();
             responseBody(body);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.debug(e.getMessage());
         }
     }

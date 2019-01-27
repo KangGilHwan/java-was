@@ -12,7 +12,7 @@ public class BoardDto {
     public BoardDto() {
     }
 
-    public BoardDto(Long id,String userId, String contents, String name) {
+    public BoardDto(Long id, String userId, String contents, String name) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -51,8 +51,7 @@ public class BoardDto {
         this.contents = contents;
     }
 
-
     public Board toBoard() {
-        return new Board(id,userId,contents,name);
+        return new Board(id, userId, contents, name);
     }
 }

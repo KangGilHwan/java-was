@@ -38,7 +38,7 @@ public class DataBase {
         return boards.values();
     }
 
-    public  void deleteBoard(Long id) {
+    public void deleteBoard(Long id) {
         boards.remove(id);
     }
 }

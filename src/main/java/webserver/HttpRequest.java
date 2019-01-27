@@ -23,8 +23,8 @@ public class HttpRequest {
 
         List<String> urlAndQueryString = Arrays.asList(url.split("\\?"));
         this.url = new HttpUrl(urlAndQueryString.get(0).trim());
-        this.parameters = new  HttpParameter(existParameter(urlAndQueryString, br));
-        
+        this.parameters = new HttpParameter(existParameter(urlAndQueryString, br));
+
         log.debug("Url : {} , Method : {}", getUrl(), getMethod());
     }
 
@@ -40,7 +40,7 @@ public class HttpRequest {
         return httpHeader.findHeader(key);
     }
 
-    public String getParameter(String key){
+    public String getParameter(String key) {
         return parameters.findParameter(key);
     }
 
@@ -58,11 +58,11 @@ public class HttpRequest {
         return urlAndQueryString.get(1).trim();
     }
 
-    public boolean isGetMethod(){
+    public boolean isGetMethod() {
         return method.isGetMethod();
     }
 
-    public boolean urlCollect(String mappingUrl){
+    public boolean urlCollect(String mappingUrl) {
         return url.getUrl().equals(mappingUrl);
     }
 }

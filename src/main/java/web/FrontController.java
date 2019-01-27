@@ -10,7 +10,7 @@ public class FrontController {
 
     private static final Logger log = LoggerFactory.getLogger(FrontController.class);
 
-    public static void dispatch(HttpRequest request, HttpResponse response) throws Exception{
+    public static void dispatch(HttpRequest request, HttpResponse response) throws Exception {
         BeanFactory beanFactory = BeanFactory.getInstance();
         HandlerExecution controller = beanFactory.getController(request.getUrl());
         if (controller == null) {

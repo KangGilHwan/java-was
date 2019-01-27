@@ -1,18 +1,16 @@
 package web;
 
-import annotation.Controller;
-import annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.ContentType;
 import webserver.HttpRequest;
 import webserver.HttpResponse;
 
-public class ForwardController{
+public class ForwardController {
 
     private static final Logger log = LoggerFactory.getLogger(ForwardController.class);
 
-    public static void forward(HttpRequest request, HttpResponse response){
+    public static void forward(HttpRequest request, HttpResponse response) {
         String accept = request.getHeader("Accept");
         log.debug("Stylesheet! : {}", accept);
         if (accept != null && accept.contains("text/css")) {

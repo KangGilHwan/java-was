@@ -12,7 +12,7 @@ public class HttpMethod {
         return method;
     }
 
-    public boolean isGetMethod(){
+    public boolean isGetMethod() {
         return method.equals("GET");
     }
 }
