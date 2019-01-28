@@ -2,6 +2,8 @@ package dto;
 
 import model.User;
 
+import java.util.Objects;
+
 public class UserDto {
 
     private String userId;
@@ -47,6 +49,23 @@ public class UserDto {
 
     public User toUser() {
         return new User(userId, password, name, email);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(userId, userDto.userId) &&
+                Objects.equals(password, userDto.password) &&
+                Objects.equals(name, userDto.name) &&
+                Objects.equals(email, userDto.email);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(userId, password, name, email);
     }
 
     @Override
